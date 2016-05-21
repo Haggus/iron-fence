@@ -1,6 +1,8 @@
 extern crate iron;
 
-use iron::BeforeMiddleware;
+use iron::prelude::*;
+use iron::AfterMiddleware;
+use iron::status;
 
 pub struct Fence {}
 
@@ -10,8 +12,11 @@ impl Fence {
     }
 }
 
-impl BeforeMiddleware for Fence {
-
+impl AfterMiddleware for Fence {
+    fn after(&self, req: &mut Request, _: Response) -> IronResult<Response> {
+        println!("{:?}", req.remote_addr);
+        Ok(Response::with((status::TooManyRequests)))
+    }
 }
 
 #[cfg(test)]

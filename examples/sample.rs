@@ -10,7 +10,7 @@ fn main() {
 
     let mut chain = Chain::new(hello_handler);
 
-    chain.link_before(fence);
+    chain.link_after(fence);
 
     Iron::new(chain).http("localhost:3000").unwrap();
 }
